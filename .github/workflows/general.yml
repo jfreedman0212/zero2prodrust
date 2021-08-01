@@ -19,13 +19,13 @@ jobs:
 #        ports:
 #          - 5432:5432
     steps:
-#      - uses: actions/checkout@v2
-#      - uses: actions-rs/toolchain@v1
-#        with:
-#          profile: minimal
-#          toolchain: stable
-#          override: true
-#      - name: Migrate database
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - name: Migrate database
 #        run: |
 #          sudo apt-get install libpq-dev -y
 #          cargo install --version=0.2.0 sqlx-cli --no-default-features --features postgres
@@ -62,12 +62,12 @@ jobs:
 #        ports:
 #          - 5432:5432
     steps:
-#      - uses: actions/checkout@v2
-#      - uses: actions-rs/toolchain@v1
-#        with:
-#          components: clippy
-#          toolchain: stable
-#          override: true
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          components: clippy
+          toolchain: stable
+          override: true
 #      - name: Migrate database
 #        run: |
 #          sudo apt-get install libpq-dev -y
@@ -94,12 +94,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-#      - name: Install stable toolchain
-#        uses: actions-rs/toolchain@v1
-#        with:
-#          toolchain: stable
-#          override: true
-#
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
 #      - name: Migrate database
 #        run: |
 #          sudo apt-get install libpq-dev -y
