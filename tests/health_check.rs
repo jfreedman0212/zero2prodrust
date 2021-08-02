@@ -5,7 +5,7 @@ mod utils;
 #[actix_rt::test]
 async fn health_check_works() {
     // Arrange (create the app and the request client)
-    let base_url = utils::spawn_app();
+    let base_url = utils::spawn_app().await;
     let client = reqwest::Client::new();
 
     // Act (send the request and track the response)

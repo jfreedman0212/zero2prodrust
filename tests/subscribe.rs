@@ -6,7 +6,7 @@ mod utils;
 #[actix_rt::test]
 async fn subscribe_returns_a_200_for_valid_form_data() {
     // Arrange
-    let base_url = utils::spawn_app();
+    let base_url = utils::spawn_app().await;
     let client = reqwest::Client::new();
     let body = "name=josh%20freedman&email=joshfreedman%40pm.me";
     let config = get_configuration().expect("Cannot read from config file");
@@ -36,7 +36,7 @@ async fn subscribe_returns_a_200_for_valid_form_data() {
 #[actix_rt::test]
 async fn subscribe_returns_a_400_when_data_is_missing() {
     // Arrange
-    let base_url = utils::spawn_app();
+    let base_url = utils::spawn_app().await;
     let client = reqwest::Client::new();
     let test_cases = vec![
         ("name=josh%20freedman", "Missing email address"),
