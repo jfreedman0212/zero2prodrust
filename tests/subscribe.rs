@@ -1,3 +1,6 @@
+use sqlx::{Connection, PgConnection};
+use zero2prod::get_configuration;
+
 mod utils;
 
 #[actix_rt::test]
@@ -6,6 +9,10 @@ async fn subscribe_returns_a_200_for_valid_form_data() {
     let base_url = utils::spawn_app();
     let client = reqwest::Client::new();
     let body = "name=josh%20freedman&email=joshfreedman%40pm.me";
+    let config = get_configuration().expect("Cannot read from config file");
+    let mut connection = PgConnection::connect(&config.database.connection_string())
+        .await
+        .expect("Cannot connect to Postgres");
 
     // Act
     let response = client
@@ -18,6 +25,12 @@ async fn subscribe_returns_a_200_for_valid_form_data() {
 
     // Assert
     assert_eq!(200, response.status().as_u16());
+    let saved = sqlx::query!("SELECT Email, Name FROM Subscriptions")
+        .fetch_one(&mut connection)
+        .await
+        .expect("Failed to fetch saved subscription");
+    assert_eq!(saved.email, "joshfreedman@pm.me");
+    assert_eq!(saved.name, "josh freedman");
 }
 
 #[actix_rt::test]
