@@ -5,12 +5,12 @@ mod utils;
 #[actix_rt::test]
 async fn health_check_works() {
     // Arrange (create the app and the request client)
-    let base_url = utils::spawn_app().await;
+    let test_app = utils::spawn_app().await;
     let client = reqwest::Client::new();
 
     // Act (send the request and track the response)
     let response = client
-        .get(format!("{}/health_check", &base_url))
+        .get(format!("{}/health_check", test_app.address))
         .send()
         .await
         .expect("Failed to execute Health Check Request");
